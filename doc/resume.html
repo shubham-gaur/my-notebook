@@ -2735,6 +2735,12 @@ div.tocify {
   border-radius: 0px;
 }
 
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
 
 </style>
 
@@ -2773,8 +2779,10 @@ div.tocify {
 
 <div id="education" class="section level2">
 <h2>Education</h2>
-<div id="m.-tech.-information-techology-2017-2019" class="section level3">
-<h3>M. Tech., Information Techology [2017-2019]</h3>
+<div id="m.-tech." class="section level3">
+<h3>M. Tech.</h3>
+<div id="information-techology-2017-19" class="section level4">
+<h4>Information Techology [2017-19]</h4>
 <ul>
 <li>National Institute of Technology (Raipur)
 <ul>
@@ -2783,8 +2791,11 @@ div.tocify {
 </ul></li>
 </ul>
 </div>
-<div id="b.-tech-computer-science-and-engineering-2013-2017" class="section level3">
-<h3>B. Tech, Computer Science and Engineering [2013-2017]</h3>
+</div>
+<div id="b.-tech" class="section level3">
+<h3>B. Tech</h3>
+<div id="computer-science-and-engineering-2013-17" class="section level4">
+<h4>Computer Science and Engineering [2013-17]</h4>
 <ul>
 <li>Chameli Devi School of Engineering (Indore)</li>
 <li>Rajiv Gandhi Technical University (Bhopal)
@@ -2794,20 +2805,21 @@ div.tocify {
 </ul></li>
 </ul>
 </div>
-<div id="xii-std.-2012-2013" class="section level3">
-<h3>XII Std. [2012-2013]</h3>
+</div>
+<div id="xii-std." class="section level3">
+<h3>XII Std.</h3>
 <ul>
-<li>Govt. Excellence H. S. School (Sheopur)</li>
+<li>Govt. Excellence H. S. School (Sheopur) [2012-13]</li>
 <li>Madhya Pradesh Board of Secondary Education (MPBSE, Bhopal)
 <ul>
 <li>Percentage: 85.20%</li>
 </ul></li>
 </ul>
 </div>
-<div id="x-std.-2010-2011" class="section level3">
-<h3>X Std. [2010-2011]</h3>
+<div id="x-std." class="section level3">
+<h3>X Std.</h3>
 <ul>
-<li>St. Pius School (Sheopur)</li>
+<li>St. Pius School (Sheopur) [2010-11]</li>
 <li>Central Board of Secondary Education (CBSE)
 <ul>
 <li>Percentage: 85.20%</li>
@@ -2817,13 +2829,16 @@ div.tocify {
 </div>
 <div id="experience-training" class="section level2">
 <h2>Experience / Training</h2>
-<div id="commscope-network-india-pvt.-ltd-present" class="section level3">
-<h3>Commscope Network India Pvt. Ltd [Present]</h3>
-<p>Handling protocols, feature add-ons and bug fixes in networking domain.<br />
-- Works as a network engineer - Implementing security protocols and security associations in ipv4 and ipv6 domains</p>
+<div id="commscope-networks-india" class="section level3">
+<h3>Commscope Networks India</h3>
+<p>Handling protocols, feature add-ons and bug fixes in networking domain</p>
+<ul>
+<li>Works as a network engineer</li>
+<li>Implementing security protocols and security associations in ipv4 and ipv6 domains</li>
+</ul>
 </div>
-<div id="national-institute-of-technology-aug-2018" class="section level3">
-<h3>National Institute of Technology [Aug 2018]</h3>
+<div id="national-institute-of-technology" class="section level3">
+<h3>National Institute of Technology</h3>
 <ul>
 <li>Deep Learning: TensorFlow</li>
 <li>Apache Spark: Pyspark, ML, Pipeline</li>
@@ -2831,15 +2846,15 @@ div.tocify {
 <li>Omnet++, Matlab</li>
 </ul>
 </div>
-<div id="zensar-techologies-dec-2016" class="section level3">
-<h3>Zensar Techologies [Dec 2016]</h3>
+<div id="zensar-techologies" class="section level3">
+<h3>Zensar Techologies</h3>
 <ul>
 <li>Trained in java core and advance.</li>
 <li>Trained in SQL/PLSQL.</li>
 </ul>
 </div>
-<div id="open-courses-june-2016" class="section level3">
-<h3>Open Courses [June 2016]</h3>
+<div id="open-courses" class="section level3">
+<h3>Open Courses</h3>
 <ul>
 <li>Certification in Core Java</li>
 </ul>
@@ -3017,7 +3032,7 @@ $(document).ready(function ()  {
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
     };
-    options.showAndHide = true;
+    options.showAndHide = false;
     options.smoothScroll = true;
 
     // tocify

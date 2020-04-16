@@ -7,7 +7,7 @@ output:
     df_print: paged
     toc: true
     toc_float:
-      collapsed: true
+      collapsed: false
       smooth_scroll: true
     theme: flatly
     # “cerulean”, “cosmo”, “flatly”, “journal”, “lumen”, “paper”, “readable”, “sandstone”, “simplex”, “spacelab”, “united”, and “yeti”
@@ -16,45 +16,51 @@ output:
 
 ## Education
 
-### M. Tech., Information Techology [2017-2019] 
+### M. Tech. 
+#### Information Techology [2017-19]
 * National Institute of Technology (Raipur)
     -  Thesis: Secure Information Aggregation for Smart Grid
     -  CGPA: 8.25  
 
-### B. Tech, Computer Science and Engineering [2013-2017]
+### B. Tech
+#### Computer Science and Engineering [2013-17]
 * Chameli Devi School of Engineering (Indore)
 * Rajiv Gandhi Technical University (Bhopal)
     - Major: Intelligent Attendance Management System
     - CGPA: 7.95
 
-### XII Std. [2012-2013] 
-* Govt. Excellence H. S. School (Sheopur)
+### XII Std.  
+* Govt. Excellence H. S. School (Sheopur) [2012-13]
 * Madhya Pradesh Board of Secondary Education (MPBSE, Bhopal)
     - Percentage: 85.20%  
 
-### X Std. [2010-2011] 
-* St. Pius School (Sheopur)
+### X Std.  
+* St. Pius School (Sheopur) [2010-11]
 * Central Board of Secondary Education (CBSE)
     - Percentage: 85.20%  
 
 ## Experience / Training
 
-### Commscope Network India Pvt. Ltd [Present]
-Handling protocols, feature add-ons and bug fixes in networking domain.  
+### Commscope Networks India
+Handling protocols, feature add-ons and bug fixes in networking domain
+
 - Works as a network engineer
 - Implementing security protocols and security associations in ipv4 and ipv6 domains
 
-### National Institute of Technology [Aug  2018]      
+### National Institute of Technology
+
 - Deep Learning: TensorFlow
 - Apache Spark: Pyspark, ML, Pipeline
 - Realization of research paper “Secure Information Aggregation for Smart Grids using Homomorphic Encryption” by Fengjun Li, Bo Luo, Peng Liu with the help of Paillier Encryption and Python 2.7.
 - Omnet++, Matlab
 
-### Zensar Techologies [Dec  2016]
+### Zensar Techologies
+
 - Trained in java core and advance.
 - Trained in SQL/PLSQL.
 
-### Open Courses [June 2016]
+### Open Courses
+
 - Certification in Core Java
 
 ## Technical Skills

@@ -26,7 +26,7 @@ My full CV is available [here](doc/resume.html).
 
 ---
 
-## Technical Queries {.tabset .tabset-fade .tabset-pills}
+## Technical Queries {.tabset .tabset-fade}
 
 ### Windows
 
@@ -441,7 +441,7 @@ cd /mnt/s
 
 ---
 
-## Configurations {.tabset .tabset-fade .tabset-pills}
+## Configurations {.tabset .tabset-fade}
 
 ### Sublime
 

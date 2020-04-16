@@ -1,6 +1,6 @@
 ---
 name: "Shubham Gaur"
-title: "COMMSCOPE © 2020"
+title: "© 2020, Shubham Gaur"
 output: 
   html_document:
     df_print: paged
@@ -11,23 +11,20 @@ output:
     theme: flatly
 ---
 
-| Liscensed By | COMMSCOPE-GPL |
+| Licensed Under | GNU General Public License v2.0 |
 | :--- | :--- |
-| Guided By | **Sriram Dharwadkar** |
 | Documented By | **Shubham Gaur** |
-| Period | Aug 16,2019 :: Sep 13,2019 |
-| Updated By | Sep 13,2019 |
-| Designation | **Engineering Trainee** |
-| Email | [Shubham.Gaur@commscope.com](www.outlook.com) |
+| Period | Aug 16,2019 :: Apr 13,2020 |
+| Updated By | Apr 17, 2020 |
 
 ### Copyright
 
-This document and its content is copyright of [COMMSCOPE](https://www.commscope.com) - © [COMMSCOPE](https://www.commscope.com) 2019. All rights reserved.
+This document and its content is copyright of thhe Author - © 2020, [Shubham Gaur](https://shubham-gaur.github.io). All rights reserved.
 
 <p style="text-align:justify;"> 
 Any redistribution or reproduction of part or all of the contents in any form is prohibited other than the following:
 * you may print or download to a local hard disk extracts for your personal and non-commercial use only.
-* you may copy the content to individual third parties for their personal use, but only if you acknowledge the *author* and [*COMMSCOPE*](https://www.commscope.com) as the source of the material.
+* you may copy the content to individual third parties for their personal use, but only if you acknowledge the *author* as the source of the material.
 </p>
 
 <p style="text-align:justify;"> 

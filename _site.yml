@@ -10,7 +10,7 @@ navbar:
     - text: "Programming"
       href: https://ideone.com/
     - text: "Logs"
-      href: https://app.simplenote.com/
+      href: http://simp.ly/p/JV6Cgs
   right:
     - icon: fa-github fa-lg
       href: http://shubham-gaur.github.io

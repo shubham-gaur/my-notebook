@@ -307,8 +307,8 @@ $ kubectl delete <POD/DEPLOYMENT/SERVICE> <PODNAME/DEPLOYMENT/SERVICE> \
 ```
 
 ### Others
-* <a target="_blank" rel="noopener noreferrer" href="ubuntu">Kubernetes for Ubuntu16</a>
-* <a target="_blank" rel="noopener noreferrer" href="centos">Kubernetes for CentOS7</a>
+* <a target="_blank" rel="noopener noreferrer" href="ubuntu.txt">Kubernetes for Ubuntu16</a>
+* <a target="_blank" rel="noopener noreferrer" href="centos.txt">Kubernetes for CentOS7</a>
 
 ---
 
