@@ -1,0 +1,30 @@
+name: "Shubham Gaur"
+output_dir: "."
+navbar:
+  title: "Shubham Gaur"
+  left:
+    - text: "Writing"
+      href: writing.html
+    - text: "Speaking"
+      href: talks.html
+    - text: "Programming"
+      href: https://ideone.com/
+    - text: "Logs"
+      href: https://app.simplenote.com/
+  right:
+    - icon: fa-github fa-lg
+      href: http://shubham-gaur.github.io
+    - icon: fa-linkedin fa-lg
+      href: https://www.linkedin.com/in/-shubhamgaur/
+output:
+  html_document:
+    df_print: paged
+    toc: true
+    toc_float:
+      collapsed: true
+      smooth_scroll: true
+    number_sections: false
+    theme: readable
+    # “cerulean”, “cosmo”, “flatly”, “journal”, “lumen”, “paper”, “readable”, “sandstone”, “simplex”, “spacelab”, “united”, and “yeti”
+    highlight: tango
+    css: 'styles.css'

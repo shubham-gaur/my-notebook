@@ -1,0 +1,314 @@
+---
+title: "Kubernetes"
+author: "Shubham Gaur"
+date: "16/04/2020"
+output: 
+  html_document:
+    df_print: paged
+    toc: true
+    toc_float:
+      collapsed: true
+      smooth_scroll: true
+    theme: united
+    # “cerulean”, “cosmo”, “flatly”, “journal”, “lumen”, “paper”, “readable”, “sandstone”, “simplex”, “spacelab”, “united”, and “yeti”
+    highlight: tango
+---
+---
+
+## Chapter: Kubernetes 
+
+### Installation Guidelines {.tabset .tabset-fade .tabset-pills}
+
+#### Harware Specifications
+    1. CPU Cores: (Master Node:2 ; Slave Node:1)
+    2. RAM: 16 GB
+    3. Network Adapter: 2 (NAT Network; Host-Only Adapter)
+    4. Processor: i5+
+
+#### Software Specifications
+    1. OS: CentOS 7+ / Ubuntu 16+ (Minimal Image)
+
+> **Note:** This Draft follows procedure and instructions related to centOS7  
+
+### Prerequisites
+#### System Configuration (*Configurations as per CentOS*)
+* setenforce 0
+* swapoff -a (*To disable permanently: **vi /etc/fstab**: Comment Swap line*) 
+* hostnamectl set-hostname 'k8s-master' (*for slave **k8s-slave1** *)
+* exec bash
+* sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
+* modprobe br_netfilter
+* echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
+
+#### Firewall Configuration
+```shell
+firewall-cmd --permanent --add-port=6443/tcp
+firewall-cmd --permanent --add-port=2379-2380/tcp
+firewall-cmd --permanent --add-port=10250/tcp
+firewall-cmd --permanent --add-port=10251/tcp
+firewall-cmd --permanent --add-port=10252/tcp
+firewall-cmd --permanent --add-port=10255/tcp
+firewall-cmd --reload
+```
+
+#### Update Repository
+```shell
+cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+        https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF
+```
+
+#### Install Kubernetes
+The high-level plan is to initialize a new cluster with node1 as the master. We’ll create an overlay network, then add node2 and node3 as nodes. All three nodes will get:
+* Docker
+* kubadm
+* kubelet
+* kubectl
+* The CNI
+Docker is the container runtime, kubeadm is the tool we’ll use the build the cluster, kubelet is the Kubernetes node agent, kubectl is the standard Kubernetes client, and CNI (Container Network Interface) installs support for CNI networking.
+
+1. Kubernetes Deamon 
+```shell
+yum install kubeadm kubectl kubelet kubernetes-cni -y
+```
+2. Docker
+```shell
+yum install docker -y
+```
+3. Check Status
+```shell
+systemctl restart docker && systemctl enable docker
+systemctl  restart kubelet && systemctl enable kubelet
+```
+
+### Kubernetes Cluster
+#### Initialize a new cluster
+Initializing a new Kubernetes cluster with kubeadm is as simple as typing `kubeadm init`.
+
+`$ kubeadm init`
+
+```shell
+[init] Using Kubernetes version: v1.16.3
+[preflight] Running pre-flight checks
+        [WARNING Firewalld]: firewalld is active, please ensure ports [6443 10250] are open or your cluster may not function correctly
+[preflight] Pulling images required for setting up a Kubernetes cluster
+[preflight] This might take a minute or two, depending on the speed of your internet connection
+[preflight] You can also perform this action in beforehand using 'kubeadm config images pull'
+[kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
+[kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
+[kubelet-start] Activating the kubelet service
+[certs] Using certificateDir folder "/etc/kubernetes/pki"
+[certs] Generating "ca" certificate and key
+[certs] Generating "apiserver" certificate and key
+[certs] apiserver serving cert is signed for DNS names [k8s-master kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.96.0.1 10.0.2.4]
+[certs] Generating "apiserver-kubelet-client" certificate and key
+[certs] Generating "front-proxy-ca" certificate and key
+[certs] Generating "front-proxy-client" certificate and key
+[certs] Generating "etcd/ca" certificate and key
+[certs] Generating "etcd/server" certificate and key
+[certs] etcd/server serving cert is signed for DNS names [k8s-master localhost] and IPs [10.0.2.4 127.0.0.1 ::1]
+[certs] Generating "etcd/peer" certificate and key
+[certs] etcd/peer serving cert is signed for DNS names [k8s-master localhost] and IPs [10.0.2.4 127.0.0.1 ::1]
+[certs] Generating "etcd/healthcheck-client" certificate and key
+[certs] Generating "apiserver-etcd-client" certificate and key
+[certs] Generating "sa" key and public key
+[kubeconfig] Using kubeconfig folder "/etc/kubernetes"
+[kubeconfig] Writing "admin.conf" kubeconfig file
+[kubeconfig] Writing "kubelet.conf" kubeconfig file
+[kubeconfig] Writing "controller-manager.conf" kubeconfig file
+[kubeconfig] Writing "scheduler.conf" kubeconfig file
+[control-plane] Using manifest folder "/etc/kubernetes/manifests"
+[control-plane] Creating static Pod manifest for "kube-apiserver"
+[control-plane] Creating static Pod manifest for "kube-controller-manager"
+[control-plane] Creating static Pod manifest for "kube-scheduler"
+[etcd] Creating static Pod manifest for local etcd in "/etc/kubernetes/manifests"
+[wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory "/etc/kubernetes/manifests". This can take up to 4m0s
+[apiclient] All control plane components are healthy after 38.007227 seconds
+[upload-config] Storing the configuration used in ConfigMap "kubeadm-config" in the "kube-system" Namespace
+[kubelet] Creating a ConfigMap "kubelet-config-1.16" in namespace kube-system with the configuration for the kubelets in the cluster
+[upload-certs] Skipping phase. Please see --upload-certs
+[mark-control-plane] Marking the node k8s-master as control-plane by adding the label "node-role.kubernetes.io/master=''"
+[mark-control-plane] Marking the node k8s-master as control-plane by adding the taints [node-role.kubernetes.io/master:NoSchedule]
+[bootstrap-token] Using token: p3vj0c.bonwmtka2d2c5d0z
+[bootstrap-token] Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles
+[bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials
+[bootstrap-token] configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
+[bootstrap-token] configured RBAC rules to allow certificate rotation for all node client certificates in the cluster
+[bootstrap-token] Creating the "cluster-info" ConfigMap in the "kube-public" namespace
+[addons] Applied essential addon: CoreDNS
+[addons] Applied essential addon: kube-proxy
+
+Your Kubernetes control-plane has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join 10.0.2.4:6443 --token 2fq99h.85jtwh3gem63ktyv \
+    --discovery-token-ca-cert-hash sha256:b99106c43367bacb188648a7b3fe392a2ca0a60ae46b9c0d653328e14b4d71a9
+```
+**KEEP IT SAFE: **
+```shell
+kubeadm join 10.0.2.4:6443 --token 2fq99h.85jtwh3gem63ktyv \
+    --discovery-token-ca-cert-hash \
+    sha256:b99106c43367bacb188648a7b3fe392a2ca0a60ae46b9c0d653328e14b4d71a9
+```
+#### Deploy Overlay Network (*This draft follows weavenet*)
+```shell
+export kubever=$(kubectl version | base64 | tr -d '\n')
+kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$kubever"
+```
+
+> You should now deploy a pod network to the cluster.
+Run `kubectl apply -f [podnetwork].yaml` with one of the options listed at:
+[Kuberenetes::ClusterAdministration:Add-ons](https://kubernetes.io/docs/concepts/cluster-administration/addons/)
+
+---
+
+## Chapter: Pods
+Pods sit somewhere in between a container and a VM. They’re bigger, and arguably more high level than a container, but they’re a lot smaller than a VM.Every Pod gets its own IP. Even if a Pod is a multi-container Pod, the Pod still gets a single IP. Figure 4.3 shows two Pods each with their own IP. Even though one of the Pods is hosting two containers it still only gets a single IP.This Pod networking model makes inter-Pod communication really simple. Every Pod in the cluster has its own IP addresses that’s fully routable on the Pod network. If you read the chapter on installing Kubernetes you’ll have seen how we created a Pod network at the end of the manual install section. Every Pod gets it’s own routable IP on that network. This means every Pod can talk directly to every other Pod using IPs. There’s no need to mess about with things like nasty port mappings.
+
+If you do need to make multiple containers available outside of the Pod you do this by exposing them on individual ports. Each container needs its own port and no two containers can use the same port. Pod follow atomicity i.e. when we deploy a Pod it’s an all or nothing job.
+
+### Hands-on with Pods
+We define Pods in manifest files and POST them to the API server and let the scheduler take care of instantiating them on the cluster.
+
+#### Example `Pod.yml`:
+
+```shell
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod-1
+  labels:
+    zone: prod
+    version: v1
+spec:
+  containers:
+  - name: test-pod-container-1
+    image: nginx
+    ports:
+    - containerPort: 8080
+
+$ kubectl create -f pod.yml
+pod "test-pod-1" created
+
+# Get List of Pods
+$ kubectl get pods
+
+# Get Pod Status
+$ kubectl get pods NAME READY STATUS RESTARTS AGE 
+test-pod-1 0/1 ContainerCreating 0 9s
+
+$ kubectl get pods
+NAME        READY    STATUS     RESTARTS   AGE
+hello-pod   1/1      Running    0          2m
+```
+
+### Summary
+1. Pods are the smallest unit of scheduling on Kubernetes
+2. You can have more than one container in a Pod. Single-container Pods are the most common type, but multi-pod containers are ideal for containers that need to be tightly coupled - may be they need to share memory or volumes.
+3. Pods get scheduled on nodes – you can’t ever end up with a single Pod spanning multiple nodes.
+4. They get defined declaratively in a manifest file that we POST to the API server and let the scheduler assign them to nodes.
+
+
+---
+
+## Chapter: Replication Controller
+### Pods via Replication Controller
+
+Replication Controllers wrap around Pods and introduce desired state.
+
+Let’s assume we’re deploying an application and require 5 replicas of a particular Pod running at all times. Instead of defining the Pod 5 times and individually deploying 5 copies of it, we’d define it as part of a Replication Controller. This Replication Controller is defined as a simple YAML or JSON manifest and POSTed to the API server. However, as part of the Replication Controller manifest, we define the need for 5 replicas. This is recorded in the cluster store as part of the clusters desired state. Kubernetes then runs continuous background loops that are always checking to make sure that the actual state of the cluster matches the desired state (5 replicas of the Pod running).
+
+#### Example `ReplicationController-Pod.yml`:
+```shell
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: test-replication-controller-pod-rc
+spec:
+  replicas: 10
+  selector:
+    app: Test-RC
+  template:
+    metadata:
+      labels:
+        app: Test-RC
+    spec:
+      containers:
+      - name: test-replication-controller-container-1
+        image: nginx
+        ports:
+        - containerPort: 8080
+
+$ kubectl create -f ReplicationController-Pod.yml
+replicationcontroller "test-replication-controller-pod-rc" created
+
+$ kubectl get rc
+NAME       DESIRED   CURRENT   READY   AGE
+test-replication-controller-pod-rc   10        10        10      36s
+```
+---
+
+## Chapter: Service
+
+---
+
+## Chapter: Deployment
+
+---
+
+## Help
+
+### Important Commands
+
+```shell
+$ kubectl delete services dashboard-metrics-scraper \
+        --namespace=kubernetes-dashboard
+$ kubectl get deployments -A
+$ kubectl delete deployment kubernetes-dashboard \
+        --namespace=kubernetes-dashboard
+$ kubectl delete deployment dashboard-metrics-scraper \
+        --namespace=kubernetes-dashboard
+$ kubectl get service -A
+
+# Delete any dashboard services:
+$ kubectl delete service kubernetes-dashboard \
+        --namespace=kubernetes-dashboard
+$ kubectl delete service dashboard-metrics-scraper \
+        --namespace=kubernetes-dashboard
+
+# Then finally the service account and secrets:
+$ kubectl delete sa kubernetes-dashboard \
+        --namespace=kubernetes-dashboard
+$ kubectl delete secret kubernetes-dashboard-certs \
+        --namespace=kubernetes-dashboard
+$ kubectl delete secret kubernetes-dashboard-key-holder \
+        --namespace=kubernetes-dashboard
+$ kubectl delete <POD/DEPLOYMENT/SERVICE> <PODNAME/DEPLOYMENT/SERVICE> \
+        --grace-period=0 \
+        --force --namespace <NAMESPACE>
+```
+
+### Others
+* <a target="_blank" rel="noopener noreferrer" href="ubuntu">Kubernetes for Ubuntu16</a>
+* <a target="_blank" rel="noopener noreferrer" href="centos">Kubernetes for CentOS7</a>
+
+---
+

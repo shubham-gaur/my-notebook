@@ -1,0 +1,207 @@
+```
+-----------------------------------------------------------
+    Ubuntu Server Installation 18.08
+-----------------------------------------------------------
+
+Network Adapter Configuration:
+[shell]
+shubham@master-node:~$ sudo vi /etc/netplan/50-cloud-init.yaml              
+ # This file is generated from information provided by                    
+ # the datasource.  Changes to it will not persist across an instance.    
+ # To disable cloud-init's network configuration capabilities, write a fil    e                                                                        
+ # /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following    :                                                                        
+ # network: {config: disabled}                                            
+ network:                                                                
+  ethernets:                                                          
+    enp0s3:                                                          
+      dhcp4: no
+# for Master                                                    
+    addresses: [10.0.0.100/24]
+# for Slave
+    addresses: [10.0.0.200/24]                                  
+      enp0s8:                                                          
+        dhcp4: false                                                
+        dhcp6: false
+# for Master                                                
+    addresses: [192.168.56.100/24]                              
+# for Slave                                                
+    addresses: [192.168.56.200/24]                              
+      match:                                                      
+        macaddress: 08:00:27:53:04:F3                            
+      enp0s9:                                                          
+        dhcp4: true                                                  
+    version: 2                      
+[\shell]
+
+SSH Configuration:
+[shell]
+shubham@kubernetes:~$ sudo vi /etc/ssh/sshd_config                                                                                                    
+13 #Port 22                                                                
+14 Port 1337  
+[\shell]
+
+Modifying Firewall:
+! sudo ufw reset
+vi /etc/ssh/sshd_config
+service ssh restart
+ufw verbose
+ufw enable
+ufw verbose
+ufw allow ssh/port
+ufw verbose
+
+-----------------------------------------------------------
+    System Setup
+-----------------------------------------------------------
+$ sudo apt update
+$ sudo swapoff -a
+$ sudo nano /etc/fstab
+ // Comment the swap space line
+
+IP Addresses:
+$ ifconfig
+! Master Node:
+[Internal Network]
+enp0s3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500                
+        inet 10.0.0.100  netmask 255.255.255.0  broadcast 10.0.0.255                    
+                                                                             
+[Host Only Network]
+enp0s8: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500                
+        inet 192.168.56.100  netmask 255.255.255.0  broadcast 192.168.56.255            
+
+[NAT]                                                                            
+enp0s9: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500                
+        inet 10.0.4.15  netmask 255.255.255.0  broadcast 10.0.4.255          
+
+! Slave Node:
+[Internal Network]                                                                            
+enp0s3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500                
+        inet 10.0.0.200  netmask 255.255.255.0  broadcast 10.0.0.255                    
+
+[Host Only Network]                                                                            
+enp0s8: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500                
+        inet 192.168.56.200  netmask 255.255.255.0  broadcast 192.168.56.255            
+
+[NAT]                                                                            
+enp0s9: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500                
+        inet 10.0.4.15  netmask 255.255.255.0  broadcast 10.0.4.255
+
+Update hosts:
+sudo nano /etc/hosts
+
+Update hostname:
+sudo nano /etc/hostname
+
+-----------------------------------------------------------
+    Docker
+-----------------------------------------------------------
+$ sudo su
+$ update
+$ apt install -y docker.io
+$ apt update && apt-get install apt-transport-https curl -y
+$ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
+
+Create file:
+vi /etc/apt/sources.list.d/kubernetes.list
+[text]
+deb http://apt.kubernetes.io/ kubernetes-xenial main
+[\text]
+! or Add Repository: $ sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+
+Start:
+systemctl enable docker.service
+Test:
+sudo docker run hello-world
+
+-----------------------------------------------------------
+    Kubernetes
+-----------------------------------------------------------
+$ sudo apt install -y kubeadm kubelet kubectl
+$ sudo nano /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+Set Environment:
+[text]
+Environment="cgroup-driver=systemd/cgroup-driver=cgroupfs"
+[\text]
+
+
+kubectl apply -f https://docs.projectcalico.org/v3.9/manifests/calico.yaml
+kubectl get pods -o wide --all-namespaces
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+kubectl create serviceaccount dashboard
+kubectl create clusterrolebinding dashboard-admin -n default --clusterrole=cluster-admin --serviceaccount=default:dashboard
+kubectl proxy
+// kubectl create secret generic db-user-pass --from-file=./username.txt --from-file=./password.txt
+kubectl create secret $(kubectl get serviceaccount dashboard jsonpath="{.secrets[0].name}") -o jsonpath="{.data.token}" | base64 --decode
+
+[shell]
+shubham@master-node:~$ sudo kubeadm init --pod-network-cidr=10.0.0.5/24      
+To start using your cluster, you need to run the following as a regular user:                                                                            
+  mkdir -p $HOME/.kube                                                      
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config                  
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config                            
+                                                                             
+You should now deploy a pod network to the cluster.                          
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:  
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/        
+                                                                             
+Then you can join any number of worker nodes by running the following on each as root:                                                                    
+                                                                             
+kubeadm join 10.0.4.15:6443 --token a1hezc.1hrjcx5fbtc6v9w0 --discovery-token-ca-cert-hash sha256:f344eeff53f59e06e83909e48e04f3d2480a1cf8ccc77f57c594f24026a9f83c
+[\shell]
+
+MASTER:
+Your Kubernetes control-plane has initialized successfully!
+                                                                                 
+To start using your cluster, you need to run the following as a regular user:    
+                                                                                 
+  mkdir -p $HOME/.kube                                                          
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config                      
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config                                
+                                                                                 
+You should now deploy a pod network to the cluster.                              
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:      
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/            
+                                                                                 
+Then you can join any number of worker nodes by running the following on each as root:                                                                            
+                                                                                 
+kubeadm join 10.0.0.100:6443 --token kiem4p.sjkn1k1zkawmc06n --discovery-token-ca-cert-hash sha256:7c625d878b70208f4cac83656d77c520ce9377f4b987293ea8c1d8e800d4d600
+
+-----------------------------------------------------------
+    Kubernetes Errors
+-----------------------------------------------------------
+//Calico CNI:192.168.0.0/16
+//Flannel CNI: 10.244.0.0/16
+//sudo kubeadm init --pod-network-cidr=<CNI> --apiserver-advertise-address=<master>
+sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=10.0.0.100
+
+! errors
+kubeadm init --token abcdef.1234567890abcdef --kubernetes-version v1.6.5
+[kubeadm] WARNING: kubeadm is in beta, please do not use it for production clusters.
+[init] Using Kubernetes version: v1.6.5
+[init] Using Authorization mode: RBAC
+[preflight] Running pre-flight checks
+[preflight] Some fatal errors occurred:
+    Port 10251 is in use
+    Port 10252 is in use
+
+<netstat -lnp | grep kube> and kill all the process
+
+kubeadm reset
+
+
+-----------------------------------------------------------
+    Kubernetes Uninstall
+-----------------------------------------------------------
+sudo apt-get autoremove
+sudo rm -rf ~/.kube
+sudo apt-get purge kubeadm kubectl kubelet kubernetes-cni kube*
+sudo apt-get autoremove
+
+HELP:
+Restart Network:
+sudo  systemctl restart NetworkManager.service
+sudo service network-manager restart
+sudo netplan apply
+sudo nmcli networking on/off
+sudo /etc/init.d/networking restart
+```

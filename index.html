@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Shubham Gaur" />
+
+
+<title>Notebook</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Shubham Gaur</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="writing.html">Writing</a>
+</li>
+<li>
+  <a href="talks.html">Speaking</a>
+</li>
+<li>
+  <a href="https://ideone.com/">Programming</a>
+</li>
+<li>
+  <a href="https://app.simplenote.com/">Logs</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="http://shubham-gaur.github.io">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/-shubhamgaur/">
+    <span class="fa fa-linkedin fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Notebook</h1>
+<h4 class="author">Shubham Gaur</h4>
+<h4 class="date">16/04/2020</h4>
+
+</div>
+
+
+<hr />
+<p style="text-align:justify;">
+This Notebook is designed to maintain all the resources and learnings; which I have gained over my short period of studying/ Working. This notebook is totally dedicated to all the bits and pieces that made my life easier and took mo to the ride of exploring multiple technologies
+</p>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p style="text-align:justify;">
+I like to analyze data to answer research questions and test hypotheses. Currently I investigate questions related to security through my work as an Engineer at <a href="https://www.commscope.com">Commscope Networks India Pvt. Ltd.</a> in the department of Networking and Information Technology.
+</p>
+<p style="text-align:justify;">
+I graduated from the <a href="http://www.nitrr.ac.in/">National Institute of Technology, Raipur</a> with an Mtech in Information Technologys in 2019. In 2019 I started working as an Engineering Trainee at Commscope India, where I am investigatings methods to implement IP Security Services over cloud. Managing multiple docker containers over Kubernetes Engine. I am a security enthusiast, including serving on the board. My work involves Docker, Kubernetes, IPSec, Strongswan and Linux tools.
+</p>
+<p>My full CV is available <a href="doc/resume.html">here</a>.</p>
+<hr />
+<div id="technical-queries" class="section level2 tabset tabset-fade tabset-pills">
+<h2>Technical Queries</h2>
+<div id="windows" class="section level3">
+<h3>Windows</h3>
+<p style="text-align:justify;">
+Firstly, boot from a UEFI Windows 8 recovery disk (CD/DVD/USB) − I found that the automated recovery process didn’t find the correct Windows partition, nor when I managed to add it to BCD settings would it make it reliably bootable e.g. using BCDEDIT I got it to find and launch the Windows partition but it refused to cold boot or would not “keep” the settings after a 2nd reboot or power off. <br>Go into the Advanced options and run the Command Prompt.Enter diskpart to use the DiskPart tool to ensure you have all the right partitions and to identify your EFI partition − the key thing here is that your EFI partition is formatted as FAT32:
+</p>
+<pre><code>DISKPART&gt; sel disk 0
+DISKPART&gt; list vol</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Volume</th>
+<th align="center">Ltr</th>
+<th align="left">Label</th>
+<th align="left">Fs Type</th>
+<th align="left">Size</th>
+<th align="left">Status</th>
+<th align="center">Info</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Volume 0</td>
+<td align="center">E</td>
+<td align="left">DVD-ROM</td>
+<td align="left"></td>
+<td align="left">0 B</td>
+<td align="left">No</td>
+<td align="center">Media</td>
+</tr>
+<tr class="even">
+<td align="left">Volume 1</td>
+<td align="center">C</td>
+<td align="left"></td>
+<td align="left">NTFS Partition</td>
+<td align="left">195 B</td>
+<td align="left">Healthy</td>
+<td align="center">Boot</td>
+</tr>
+<tr class="odd">
+<td align="left">Volume 2</td>
+<td align="center">WINRE</td>
+<td align="left"></td>
+<td align="left">NTFS Partition</td>
+<td align="left">400 MB</td>
+<td align="left">Healthy</td>
+<td align="center">Hidden</td>
+</tr>
+<tr class="even">
+<td align="left">Volume 3</td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left">FAT32 Partition</td>
+<td align="left">260 MB</td>
+<td align="left">Healthy</td>
+<td align="center">System</td>
+</tr>
+</tbody>
+</table>
+<pre><code>Then assign a drive letter to the EFI partition:
+
+DISKPART&gt; sel vol 3
+Volume 3 is the selected volume.
+
+DISKPART&gt; assign letter=b:
+DiskPart successfully assigned the drive letter or mount point.</code></pre>
+<p>Exit DiskPart tool by entering exit and at the command prompt run the following:</p>
+<pre><code>cd ƒd b:\EFI\Microsoft\Boot\
+bootrec ƒfixboot</code></pre>
+<p>Delete or rename the BCD file:</p>
+<pre><code>ren BCD BCD.bak</code></pre>
+<p>Use bcdboot.exe to recreate BCD store:</p>
+<pre><code>bcdboot c:\Windows ƒl en−gb ƒs b: ƒf ALL</code></pre>
+<p>The ƒf ALL parameter updates the BIOS settings including UEFI firmwareƒNVRAM, ƒl en−gb is to localise for UKƒGB locale. The localisation defaults to US English, or use en−US. Reboot and cross your fingers.</p>
+<p><em>This gave me headaches. I was going in circles for a long while. There isn’t a lot of reliable info about fixing UEFIƒWindows 8 at the time of writing.</em></p>
+<p>To re−enable Hyper−V, I also had to run the following from an Administrator Command Prompt within Windows after rebooting:</p>
+<pre><code>bcdedit ƒset {default} hypervisorlaunchtype Auto bcdedit ƒset {default} nx OptIn</code></pre>
+<hr />
+</div>
+<div id="linux" class="section level3">
+<h3>Linux</h3>
+<div id="add-on" class="section level4">
+<h4>Add on</h4>
+<pre><code>LS_COLORS=&quot;ow=01;36;40&quot; &amp;&amp; export LS_COLORS
+export DISPLAY=:0
+PROMPT_DIRTRIM=2</code></pre>
+</div>
+<div id="update-and-install-necessary-packages-aptget-update" class="section level4">
+<h4>Update and install necessary packages apt−get update</h4>
+<pre><code>$ apt−get install linux−image−$(uname −r|sed &#39;s,[^−]*−[^−]*−,,&#39;) linux−headers−$(uname −r|sed &#39;s,[^−]*−[^−]*−,,&#39;) dpkg −i linux−headers−4.3.0−kali1−common_4.3.3−5kali4_amd64.deb
+dpkg −i linux−headers−4.3.0−kali1−amd64_4.3.3−5kali4_amd64.deb</code></pre>
+</div>
+<div id="install-broadcom-drivers" class="section level4">
+<h4>Install broadcom drivers</h4>
+<pre><code>$ apt−get install broadcom−sta−dkms
+Output:</code></pre>
+</div>
+<div id="enable-modules-and-disabled-unnecessary-ones" class="section level4">
+<h4>Enable modules and disabled unnecessary ones</h4>
+<pre><code>modprobe −r b44 b43 b43legacy ssb brcmsmac bcma modprobe wl
+$ echo &quot;Don&#39;t forget to enable network−manager: nano /etc/NetworkManager/NetworkManager.conf to true and restart the service.&quot;</code></pre>
+</div>
+<div id="nanorc" class="section level4">
+<h4>Nanorc</h4>
+<pre><code>set tabsize 4 set boldtext
+set constantshow set mouse
+set smarthome set smooth
+set titlecolor brightwhite,blue set statuscolor brightwhite,green set keycolor cyan
+set functioncolor green</code></pre>
+</div>
+<div id="spark-setup" class="section level4">
+<h4>Spark Setup</h4>
+<ol style="list-style-type: decimal">
+<li>Extract Spark Setup</li>
+</ol>
+<pre><code>tar −xf spark−2.1.1−bin−hadoop2.6.tgz</code></pre>
+<ol style="list-style-type: decimal">
+<li>Create a link to spark installation:</li>
+</ol>
+<pre><code>sudo ln −s ~/spark−2.1.1−bin−hadoop2.6 /usr/local/spark</code></pre>
+<ol style="list-style-type: decimal">
+<li>Edit bashrc by adding these lines::</li>
+</ol>
+<pre><code># SPARK ENVIRONMENT VARIABLES START #
+export SPARK_HOME=/usr/local/spark export PATH=$SPARK_HOMEƒbin:$PATH
+# SPARK ENVIRONMENT VARIABLES END #
+
+# SPARK ENVIRONMENT VARIABLES START #
+export SPARK_HOME=/usr/local/spark export PATH=$SPARK_HOME/bin:$PATH
+# SPARK ENVIRONMENT VARIABLES END #</code></pre>
+<hr />
+</div>
+</div>
+<div id="git" class="section level3">
+<h3>Git</h3>
+<pre><code>Optional: sed -i &#39;s/\r$//&#39; filename
+
+git pull &lt;branch&gt;
+git status
+git clone user@ip://path
+
+go get -u github.com/golang/protobuf/protoc-gen-go
+export GOPATH=$PWD                                                     
+export GOBIN=$PWD/bin                                                  
+export CGO_ENABLED=0
+export PATH=$PATH:$PWD/bin/
+protoc -I proto/ proto/ipsec.proto --go_out=plugins=grpc:src/proto
+
+// Only add: git add .
+// Add and Commit: git commit -am &quot;message&quot;
+git merge --squash &lt;branch&gt;
+git merge branch
+git rebase master
+git reset --hard origin/master
+
+If you execute git branch --all within a Git repository, remote tracking branches appear in red. These are read-only copies of the code as it appears on the remote.
+git branch --all
+git pull is a combination command, equal to git fetch + git merge
+
+https://medium.com/@shakib37/how-to-install-golang-f8cbe15baa7c
+
+Additional Information:
+It’s worth noting that it is possible to maintain current local commits by creating a branch from master or whichever branch you want to work on before resetting:
+
+For Example:
+
+git checkout master
+git branch new-branch-to-save-current-commits
+git fetch --all
+git reset --hard origin/master
+git rm -r --cached  configs/configmap.json
+
+git merge --squash develop
+git rm --cached docs/*md
+git commit --amend
+git rebase --root -i
+git push --force-with-lease origin master
+&quot;terminal.integrated.shell.windows&quot;: &quot;C:\\windows\\System32\\wsl.exe&quot;,
+&quot;go.gopath&quot;: &quot;/mnt/c/Users/SG1137/Documents/Projects/Ipsec&quot;,
+&quot;window.zoomLevel&quot;: 0,
+&quot;go.toolsGopath&quot;: &quot;/home/sg1137/go&quot;,
+&quot;go.formatTool&quot;: &quot;goimports&quot;,
+&quot;go.useLanguageServer&quot;: true,
+&quot;extensions.ignoreRecommendations&quot;: false,
+&quot;workbench.colorTheme&quot;: &quot;Dobri Next -C06- Ayu&quot;,
+&quot;editor.fontFamily&quot;: &quot;&#39;Consolas&#39;, &#39;Courier New&#39;, monospace&quot;,
+&quot;markdown.extension.toc.githubCompatibility&quot;: true,</code></pre>
+<hr />
+</div>
+<div id="vimrc" class="section level3">
+<h3>Vimrc</h3>
+<pre><code>&quot; All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by
+&quot; the call to :runtime you can find below.  If you wish to change any of those
+&quot; settings, you should do it in this file (/etc/vim/vimrc), since debian.vim
+&quot; will be overwritten everytime an upgrade of the vim packages is performed.
+&quot; It is recommended to make changes after sourcing debian.vim since it alters
+&quot; the value of the &#39;compatible&#39; option.
+
+&quot; This line should not be removed as it ensures that various options are
+&quot; properly set to work with the Vim-related packages available in Debian.
+runtime! debian.vim
+
+&quot; Vim will load $VIMRUNTIME/defaults.vim if the user does not have a vimrc.
+&quot; This happens after /etc/vim/vimrc(.local) are loaded, so it will override
+&quot; any settings in these files.
+&quot; If you don&#39;t want that to happen, uncomment the below line to prevent
+&quot; defaults.vim from being loaded.
+&quot; let g:skip_defaults_vim = 1
+
+&quot; Uncomment the next line to make Vim more Vi-compatible
+&quot; NOTE: debian.vim sets &#39;nocompatible&#39;.  Setting &#39;compatible&#39; changes numerous
+&quot; options, so any other options should be set AFTER setting &#39;compatible&#39;.
+&quot;set compatible
+
+&quot; Vim5 and later versions support syntax highlighting. Uncommenting the next
+&quot; line enables syntax highlighting by default.
+if has(&quot;syntax&quot;)
+  syntax on
+endif
+
+&quot; If using a dark background within the editing area and syntax highlighting
+&quot; turn on this option as well
+&quot; set background=dark
+
+&quot; Uncomment the following to have Vim jump to the last position when
+&quot; reopening a file
+&quot;if has(&quot;autocmd&quot;)
+&quot;  au BufReadPost * if line(&quot;&#39;\&quot;&quot;) &gt; 1 &amp;&amp; line(&quot;&#39;\&quot;&quot;) &lt;= line(&quot;$&quot;) | exe &quot;normal! g&#39;\&quot;&quot; | endif
+&quot;endif
+
+&quot; Uncomment the following to have Vim load indentation rules and plugins
+&quot; according to the detected filetype.
+&quot;if has(&quot;autocmd&quot;)
+&quot;  filetype plugin indent on
+&quot;endif
+
+&quot; The following are commented out as they cause vim to behave a lot
+&quot; differently from regular Vi. They are highly recommended though.
+&quot;set showcmd            &quot; Show (partial) command in status line.
+&quot;set showmatch          &quot; Show matching brackets.
+&quot;set ignorecase         &quot; Do case insensitive matching
+&quot;set smartcase          &quot; Do smart case matching
+&quot;set incsearch          &quot; Incremental search
+&quot;set autowrite          &quot; Automatically save before commands like :next and :make
+&quot;set hidden             &quot; Hide buffers when they are abandoned
+&quot;set mouse=a            &quot; Enable mouse usage (all modes)
+
+&quot; Source a global configuration file if available
+if filereadable(&quot;/etc/vim/vimrc.local&quot;)
+  source /etc/vim/vimrc.local
+endif
+
+:map &lt;F2&gt; :!ls&lt;CR&gt;:e
+:nnoremap &lt;C-I&gt;&lt;C-I&gt;&lt;C-I&gt; &lt;C-W&gt;&lt;C-W&gt;
+:nnoremap &lt;C-I&gt;&lt;C-I&gt; &lt;C-t&gt;
+:nnoremap &lt;C-I&gt; &lt;C-]&gt;
+:set tabstop=4
+:set softtabstop=4
+:set number
+:set foldenable
+:set foldlevelstart=10
+:set foldnestmax=10
+:set showcmd
+:set wildmenu
+:set lazyredraw
+:set showmatch
+:set incsearch
+:set hlsearch
+:set shiftwidth=4
+:set expandtab
+:set guifont=Consolas:h10.5
+:colorscheme industry
+:syntax enable
+:nnoremap &lt;leader&gt;&lt;space&gt; :nohlsearch&lt;CR&gt;
+
+&quot;highlight Normal term=none cterm=none ctermfg=White ctermbg=Black gui=none guifg=White guibg=Black
+highlight DiffAdd cterm=none ctermfg=bg ctermbg=Green gui=none guifg=bg guibg=Green
+highlight DiffDelete cterm=none ctermfg=bg ctermbg=Red gui=none guifg=bg guibg=Red
+highlight DiffChange cterm=none ctermfg=bg ctermbg=Yellow gui=none guifg=bg guibg=Yellow
+highlight DiffText cterm=none ctermfg=bg ctermbg=Magenta gui=none guifg=bg guibg=Magenta</code></pre>
+<hr />
+</div>
+<div id="bashrc" class="section level3">
+<h3>Bashrc</h3>
+<pre><code># ~/.bashrc: executed by bash(1) for non-login bashs.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don&#39;t do anything
+
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# don&#39;t put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don&#39;t overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern &quot;**&quot; used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] &amp;&amp; eval &quot;$(bash=/bin/sh lesspipe)&quot;
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z &quot;${debian_chroot:-}&quot; ] &amp;&amp; [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we &quot;want&quot; color)
+case &quot;$TERM&quot; in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+force_color_prompt=no
+
+if [ -n &quot;$force_color_prompt&quot; ]; then
+    if [ -x /usr/bin/tput ] &amp;&amp; tput setaf 1 &gt;&amp;/dev/null; then
+        # We have color support; assume it&#39;s compliant with Ecma-48
+        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+        # a case would tend to support setf rather than setaf.)
+        color_prompt=yes
+    else
+        color_prompt=
+    fi
+fi
+
+if [ &quot;$color_prompt&quot; = yes ]; then
+    #PS1=&#39;${debian_chroot:+($debian_chroot)}\[\033[00;97m\]\u@\h\[\033[01m\]:\[\033[00;91m\]\w\[\033[00;98m\]\$ &#39;
+    PS1=&#39;${debian_chroot:+($debian_chroot)}\[\033[00;90m\]\w\[\033[00;98m\]\$ &#39;
+else
+    PS1=&#39;${debian_chroot:+($debian_chroot)}\u@\h:\w\$ &#39;
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case &quot;$TERM&quot; in
+xterm*|rxvt*)
+    PS1=&quot;\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1&quot;
+    ;;
+*)
+    ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors &amp;&amp; eval &quot;$(dircolors -b  ~/.dircolors)&quot; || eval &quot;$(dircolors -b )&quot;
+    alias ls=&#39;ls --color=auto&#39;
+    alias dir=&#39;dir --color=auto&#39;
+    alias vdir=&#39;vdir --color=auto&#39;
+
+    alias grep=&#39;grep --color=auto&#39;
+    alias fgrep=&#39;fgrep --color=auto&#39;
+    alias egrep=&#39;egrep --color=auto&#39;
+fi
+
+# colored GCC warnings and errors
+export GCC_COLORS=&#39;error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01&#39;
+
+# some more ls aliases
+alias ll=&#39;ls -alF&#39;
+alias la=&#39;ls -A&#39;
+alias l=&#39;ls -CF&#39;
+
+# Add an &quot;alert&quot; alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert=&#39;notify-send --urgency=low -i &quot;$([ $? = 0 ] &amp;&amp; echo terminal || echo error)&quot; &quot;$(history|tail -n1|sed -e &#39;\&#39;&#39;s/^\s*[0-9]\+\s*//;s/[;&amp;|]\s*alert$//&#39;\&#39;&#39;)&quot;&#39;
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don&#39;t need to enable
+# this, if it&#39;s already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+# Add on
+LS_COLORS=&quot;ow=00;96;80&quot; &amp;&amp; export LS_COLORS
+#LS_COLORS=$LS_COLORS:&#39;di=0;35:&#39; &amp;&amp; export LS_COLORS
+export DISPLAY=:0
+PROMPT_DIRTRIM=2
+export GOROOT=/usr/local/go
+export GOPATH=/home/kira/go:/mnt/s/Projects/GIT/IPSec
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:/home/kira/go/bin
+cd /mnt/s</code></pre>
+<hr />
+</div>
+</div>
+<div id="configurations" class="section level2 tabset tabset-fade tabset-pills">
+<h2>Configurations</h2>
+<div id="sublime" class="section level3">
+<h3>Sublime</h3>
+<pre><code>-----------------------------------------------------------
+    SUBLIME
+-----------------------------------------------------------
+{
+    &quot;color_scheme&quot;: &quot;Packages/ayu/ayu-dark.sublime-color-scheme&quot;,
+    &quot;font_face&quot;: &quot;fira code retina&quot;,
+    &quot;font_size&quot;: 11,
+    &quot;ignored_packages&quot;:
+    [
+        &quot;Vintage&quot;
+    ],
+    &quot;theme&quot;: &quot;ayu-dark.sublime-theme&quot;
+}
+
+-----------------------------------------------------------
+    PACKAGE: OUTLINE
+-----------------------------------------------------------
+{
+    &quot;outline_width&quot;: 0.1,
+    &quot;color_scheme&quot;: &quot;Packages/ayu/ayu-dark.sublime-color-scheme&quot;,
+    &quot;word_wrap&quot;: false,
+    &quot;highlight_line&quot;: true,
+    &quot;font_face&quot;: &quot;times new roman&quot;,
+    &quot;font_size&quot;: 11,
+}
+
+-----------------------------------------------------------
+    KEY BINDINGS
+-----------------------------------------------------------
+[
+    // Toggle the default shell in panel
+    { &quot;keys&quot;: [&quot;alt+`&quot;], &quot;command&quot;: &quot;toggle_terminus_panel&quot;, &quot;args&quot;: {
+             &quot;cwd&quot;: &quot;${file_path:${folder}}&quot;
+         } 
+    },
+    // Open a terminal view at current file directory
+    {
+         &quot;keys&quot;: [&quot;ctrl+alt+t&quot;], &quot;command&quot;: &quot;terminus_open&quot;, &quot;args&quot;: {
+             &quot;cwd&quot;: &quot;${file_path:${folder}}&quot;
+         }
+    },
+    { &quot;keys&quot;: [&quot;alt+m&quot;], &quot;command&quot;: &quot;markdown_preview&quot;, &quot;args&quot;: {&quot;target&quot;: &quot;chrome&quot;, &quot;parser&quot;:&quot;markdown&quot;} }
+]</code></pre>
+</div>
+<div id="terminus" class="section level3">
+<h3>Terminus</h3>
+<pre><code>-----------------------------------------------------------
+    TERMINUS
+-----------------------------------------------------------
+{
+    &quot;256color&quot;: true,
+    &quot;debug&quot;: false,
+    &quot;natural_keyboard&quot;: true,
+    &quot;preserve_keys&quot;:
+    [
+    ],
+    &quot;scrollback_history_size&quot;: 100000000,
+    &quot;shell_configs&quot;:
+    [
+        {
+            &quot;cmd&quot;: &quot;bash.exe&quot;,
+            &quot;default&quot;: true,
+            &quot;enable&quot;: true,
+            &quot;env&quot;:
+            {
+            },
+            &quot;name&quot;: &quot;Ubuntu&quot;,
+            &quot;platforms&quot;:
+            [
+                &quot;windows&quot;
+            ]
+        },
+        {
+            &quot;cmd&quot;: &quot;cmd.exe&quot;,
+            &quot;default&quot;: false,
+            &quot;enable&quot;: true,
+            &quot;env&quot;:
+            {
+            },
+            &quot;name&quot;: &quot;Command Prompt&quot;,
+            &quot;platforms&quot;:
+            [
+                &quot;windows&quot;
+            ]
+        },
+        {
+            &quot;cmd&quot;: &quot;pwsh.exe&quot;,
+            &quot;default&quot;: false,
+            &quot;enable&quot;: true,
+            &quot;env&quot;:
+            {
+            },
+            &quot;name&quot;: &quot;PowerShell Core&quot;,
+            &quot;platforms&quot;:
+            [
+                &quot;windows&quot;
+            ]
+        },
+        {
+            &quot;cmd&quot;: &quot;powershell.exe&quot;,
+            &quot;default&quot;: false,
+            &quot;enable&quot;: true,
+            &quot;env&quot;:
+            {
+            },
+            &quot;name&quot;: &quot;PowerShell&quot;,
+            &quot;platforms&quot;:
+            [
+                &quot;windows&quot;
+            ]
+        },
+        {
+            &quot;cmd&quot;: &quot;wsl.exe&quot;,
+            &quot;default&quot;: false,
+            &quot;enable&quot;: true,
+            &quot;env&quot;:
+            {
+            },
+            &quot;name&quot;: &quot;WSL Login Shell&quot;,
+            &quot;platforms&quot;:
+            [
+                &quot;windows&quot;
+            ]
+        }
+    ],
+    &quot;theme&quot;: &quot;argonaut&quot;,
+    &quot;unix_lang&quot;: &quot;en_US.UTF-8&quot;,
+    &quot;unix_term&quot;: &quot;linux&quot;,
+    &quot;view_settings&quot;:
+    {
+        &quot;font_face&quot;: &quot;ubuntu mono&quot;,
+        &quot;font_size&quot;: 11
+    }
+}</code></pre>
+</div>
+<div id="notes" class="section level3">
+<h3>Notes</h3>
+<pre><code>-----------------------------------------------------------
+    NOTES
+-----------------------------------------------------------
+// These settings override both User and Default settings for the notes syntax
+{
+    &quot;font_face&quot;: &quot;Times New Roman&quot;,
+    &quot;font_size&quot;: 11,
+    &quot;wrap_width&quot;: 80
+}</code></pre>
+</div>
+<div id="markdown" class="section level3">
+<h3>Markdown</h3>
+<pre><code>-----------------------------------------------------------
+    MARKDOWN
+-----------------------------------------------------------</code></pre>
+</div>
+<div id="pandoc" class="section level3">
+<h3>Pandoc</h3>
+<pre><code>-----------------------------------------------------------
+    PANDOC
+-----------------------------------------------------------
+pandoc -V geometry:paperwidth=8.3in -V geometry:paperheight=11.70in -V geometry:margin=1.2in test.md -s -o demo.pdf --listings --latex-engine=xelatex --number-sections
+pandoc -H block.pandoc -V geometry:a4paper -V geometry:margin=2cm test.md -s -o test.pdf --listings --latex-engine=xelatex --number-sections</code></pre>
+</div>
+<div id="latex" class="section level3">
+<h3>Latex</h3>
+<pre><code>-----------------------------------------------------------
+    LATEX
+-----------------------------------------------------------
+\lstset{
+    basicstyle=\ttfamily,
+    numbers=left,
+    numberstyle=\footnotesize,
+    stepnumber=2,
+    numbersep=5pt,
+    backgroundcolor=\color{black!10},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=true,
+    breakautoindent=true,
+    linewidth=\textwidth
+}
+
+\lstset{
+    basicstyle=\ttfamily,
+    numbers=left,
+    keywordstyle=\color[rgb]{0.13,0.29,0.53}\bfseries,
+    stringstyle=\color[rgb]{0.31,0.60,0.02},
+    commentstyle=\color[rgb]{0.56,0.35,0.01}\itshape,
+    numberstyle=\footnotesize,
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color[RGB]{248,248,248},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=true,
+    breakautoindent=true,
+    escapeinside={\%*}{*)},
+    linewidth=\textwidth,
+    basewidth=0.5em,
+}</code></pre>
+</div>
+<div id="pdf" class="section level3">
+<h3>Pdf</h3>
+<pre><code>-----------------------------------------------------------
+    PDF
+-----------------------------------------------------------
+qpdf --linearize --encrypt &quot;commscope@&quot; &quot;shubh2495@&quot; 128 --print=none --modify=none --extract=n --use-aes=y -- ike.pdf IKE-SA.pdf</code></pre>
+<hr />
+</div>
+</div>
+<div id="list-of-articles" class="section level2 tabset tabset-fade tabset-pills">
+<h2>List of Articles</h2>
+<div id="section" class="section level3">
+<h3>2020</h3>
+<ul>
+<li><a target="_blank" rel="noopener noreferrer" href="doc/kubernetes.html">Kubernetes</a></li>
+</ul>
+<hr />
+</div>
+<div id="section-1" class="section level3">
+<h3>2019</h3>
+<ul>
+<li><a target="_blank" rel="noopener noreferrer" href="doc/ipsec.html">IPSec</a></li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<ul>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+<hr />
+<br /> <br /> <br /> <br />
+<center>
+<strong> Copyright </strong>
+</center>
+<p style="text-align:center;">
+<a target="_blank" rel="noopener noreferrer" href="doc/copyright.html">Shubham Gaur. © 2020 Commscope</a>
+</p>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
