@@ -610,6 +610,15 @@ cd /mnt/s
 -----------------------------------------------------------
 pandoc -V geometry:paperwidth=8.3in -V geometry:paperheight=11.70in -V geometry:margin=1.2in test.md -s -o demo.pdf --listings --latex-engine=xelatex --number-sections
 pandoc -H block.pandoc -V geometry:a4paper -V geometry:margin=2cm test.md -s -o test.pdf --listings --latex-engine=xelatex --number-sections
+docker run --rm --volume "$PWD:/data" --user `id -u`:`id -g` pandoc/alpine-latex -V geometry:paperwidth=8.3in -V geometry:paperheight=11.70in -V geometry:margin=1.2in -f markdown -t pdf README.md -o myfile.pdf --listings --pdf-engine=xelatex --number-sections
+-----------------------------------------------------------
+    Pandoc Block
+-----------------------------------------------------------
+% mystylefile.pandoc
+\usepackage{tcolorbox}
+\newtcolorbox{myquote}{colback=red!5!white, colframe=red!75!black}
+% redefine the 'quote' environment to use this 'myquote' environment
+\renewenvironment{quote}{\begin{myquote}}{\end{myquote}}
 ```
 
 ### Latex
@@ -658,18 +667,7 @@ pandoc -H block.pandoc -V geometry:a4paper -V geometry:margin=2cm test.md -s -o 
     basewidth=0.5em,
 }
 ```
-### Pandoc
 
-```
------------------------------------------------------------
-    Pandoc
------------------------------------------------------------
-% mystylefile.pandoc
-\usepackage{tcolorbox}
-\newtcolorbox{myquote}{colback=red!5!white, colframe=red!75!black}
-% redefine the 'quote' environment to use this 'myquote' environment
-\renewenvironment{quote}{\begin{myquote}}{\end{myquote}}
-```
 ### Pdf
 ```
 -----------------------------------------------------------
